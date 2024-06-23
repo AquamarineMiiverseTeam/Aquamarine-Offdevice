@@ -45,15 +45,18 @@ route.get("/", async (req, res) => {
 
     const announcement_posts = await base_posts_query
         .clone()
-        .where({ "communities.type": "announcement", "accounts.admin": 1 });
+        .where({ "communities.type": "announcement", "accounts.admin": 1 })
+        .limit(4);
     const featured_paintings = await base_posts_query
         .clone()
         .where({ "posts.featured": 1 })
-        .whereNotNull("posts.painting_cdn_url");
+        .whereNotNull("posts.painting_cdn_url")
+        .limit(4);
     const featured_posts = await base_posts_query
         .clone()
         .where({ "posts.featured": 1 })
-        .whereNull("posts.painting_cdn_url");
+        .whereNull("posts.painting_cdn_url")
+        .limit(4);
 
     var user_favorites;
 

@@ -163,6 +163,7 @@ route.get("/:username/favorites", get_user_data, async (req, res) => {
     const raw = req.query["raw"]
 
     const communities = await db_con.env_db("communities")
+        .select("communities.*")
         .where({ "favorites.account_id": res.locals.view_user.id })
         .leftJoin("favorites", "favorites.community_id", "=", "communities.id")
         .orderBy("favorites.create_time", "desc")
